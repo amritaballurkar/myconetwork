@@ -1,0 +1,105 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 600px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = [{'size': 10, 'group': 1, 'id': 'OTU93_1055', 'label': 'OTU93_1055', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Ilex_macropoda', 'label': 'Ilex_macropoda', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1361', 'label': 'OTU93_1361', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Cinnamomum_camphora', 'label': 'Cinnamomum_camphora', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Prunus_grayana', 'label': 'Prunus_grayana', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_67', 'label': 'OTU93_67', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Diospyros_kaki', 'label': 'Diospyros_kaki', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_639', 'label': 'OTU93_639', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_437', 'label': 'OTU93_437', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Mallotus_japonicus', 'label': 'Mallotus_japonicus', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1245', 'label': 'OTU93_1245', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_19', 'label': 'OTU93_19', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_123', 'label': 'OTU93_123', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_457', 'label': 'OTU93_457', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_461', 'label': 'OTU93_461', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1021', 'label': 'OTU93_1021', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1041', 'label': 'OTU93_1041', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1045', 'label': 'OTU93_1045', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1067', 'label': 'OTU93_1067', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_121', 'label': 'OTU93_121', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1243', 'label': 'OTU93_1243', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1247', 'label': 'OTU93_1247', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1289', 'label': 'OTU93_1289', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1325', 'label': 'OTU93_1325', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1333', 'label': 'OTU93_1333', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1341', 'label': 'OTU93_1341', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1345', 'label': 'OTU93_1345', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1357', 'label': 'OTU93_1357', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_165', 'label': 'OTU93_165', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_175', 'label': 'OTU93_175', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_181', 'label': 'OTU93_181', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_295', 'label': 'OTU93_295', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_301', 'label': 'OTU93_301', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_465', 'label': 'OTU93_465', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_551', 'label': 'OTU93_551', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_571', 'label': 'OTU93_571', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_63', 'label': 'OTU93_63', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_667', 'label': 'OTU93_667', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_673', 'label': 'OTU93_673', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_739', 'label': 'OTU93_739', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_747', 'label': 'OTU93_747', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_979', 'label': 'OTU93_979', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_949', 'label': 'OTU93_949', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'Gamblea_innovans', 'label': 'Gamblea_innovans', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_943', 'label': 'OTU93_943', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_757', 'label': 'OTU93_757', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_741', 'label': 'OTU93_741', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_849', 'label': 'OTU93_849', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_23', 'label': 'OTU93_23', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_981', 'label': 'OTU93_981', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_1075', 'label': 'OTU93_1075', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_887', 'label': 'OTU93_887', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_559', 'label': 'OTU93_559', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_515', 'label': 'OTU93_515', 'shape': 'dot'}, {'size': 10, 'group': 1, 'id': 'OTU93_145', 'label': 'OTU93_145', 'shape': 'dot'}];
+        edges = [{'width': 1, 'from': 'OTU93_1055', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_1361', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1361', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_67', 'to': 'Diospyros_kaki'}, {'width': 1, 'from': 'OTU93_67', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_639', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_639', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_437', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_437', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_437', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_1245', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1245', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_19', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_123', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_457', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_457', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'OTU93_461', 'to': 'Prunus_grayana'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1021'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1041'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1045'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1067'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_121'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1243'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1247'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1289'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1325'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1333'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1341'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1345'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_1357'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_165'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_175'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_181'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_295'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_301'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_465'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_551'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_571'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_63'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_667'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_673'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_739'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_747'}, {'width': 1, 'from': 'Prunus_grayana', 'to': 'OTU93_979'}, {'width': 1, 'from': 'OTU93_949', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_1345', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1345', 'to': 'Diospyros_kaki'}, {'width': 1, 'from': 'OTU93_1345', 'to': 'Gamblea_innovans'}, {'width': 1, 'from': 'OTU93_1345', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_1345', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_943', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1045', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_465', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'Diospyros_kaki', 'to': 'OTU93_1289'}, {'width': 1, 'from': 'Diospyros_kaki', 'to': 'OTU93_571'}, {'width': 1, 'from': 'Gamblea_innovans', 'to': 'OTU93_1341'}, {'width': 1, 'from': 'Gamblea_innovans', 'to': 'OTU93_571'}, {'width': 1, 'from': 'Gamblea_innovans', 'to': 'OTU93_757'}, {'width': 1, 'from': 'OTU93_181', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_979', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_165', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_741', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_849', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_23', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_1067', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1067', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_1067', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_981', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_301', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_301', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'OTU93_1075', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_1333', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1333', 'to': 'Ilex_macropoda'}, {'width': 1, 'from': 'Ilex_macropoda', 'to': 'OTU93_571'}, {'width': 1, 'from': 'OTU93_887', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_559', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1325', 'to': 'Cinnamomum_camphora'}, {'width': 1, 'from': 'OTU93_1325', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_515', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'OTU93_571', 'to': 'Mallotus_japonicus'}, {'width': 1, 'from': 'Cinnamomum_camphora', 'to': 'OTU93_1357'}, {'width': 1, 'from': 'Cinnamomum_camphora', 'to': 'OTU93_295'}, {'width': 1, 'from': 'Mallotus_japonicus', 'to': 'OTU93_145'}, {'width': 1, 'from': 'Mallotus_japonicus', 'to': 'OTU93_295'}];
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 100,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        // default to using dot shape for nodes
+        options.nodes = {
+            shape: "dot"
+        }
+        
+
+        network = new vis.Network(container, data, options);
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
